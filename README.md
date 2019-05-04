@@ -1,4 +1,8 @@
-# Barebones Rust starter template for bluepill stm32f103c8t6 boards
+# Sending SMT32F1 to sleep with Rust
+
+This is the code accompanying this [blog post](https://vasiliev.me/blog/sending-stm32f1-to-deep-sleep-with-rust/). Head there for some more details on what is going on here.
+
+## Requirements
 
 Requires [arm toolchain](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads) and [stlink](https://github.com/texane/stlink).
 

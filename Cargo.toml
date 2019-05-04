@@ -1,6 +1,6 @@
 [package]
-authors = ["John Doe <jd@example.com>"]
-name = "stm32f103c8t6-rust-starter"
+authors = ["Max Vasiliev <max@vasiliev.me>"]
+name = "stm32f1xx-sleep-example"
 version = "0.0.1"
 
 [workspace]
