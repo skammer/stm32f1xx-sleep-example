@@ -37,40 +37,30 @@ fn main() -> ! {
 
     gpioa.pa0.into_pull_down_input(&mut gpioa.crl);
 
-    // dp.DBGMCU.cr.modify(|_, w| {
-    //     w.dbg_standby().set_bit()
-    // });
-    //
 
-    // rcc.apb1.enr().modify(|_, w| {
-    //     w.pwren().set_bit()
-    // });
-
-    // should to the same with pwren
+    // Need to enable power interface clock before we can enable WKUP pin
     rcc.bkp.constrain(dp.BKP, &mut rcc.apb1, &mut dp.PWR);
 
     dp.PWR.cr.modify(|_r, w| {
-        // Enable stop mode
+        // Stop mode is 0, standby mode is 1
         w.pdds().set_bit()
+
         // Voltage regulators to low power mode
+        // Only for stop mode
         // .lpds().set_bit()
     });
 
     // Set SLEEPDEEP in cortex-m3 system control register
     cp.SCB.set_sleepdeep();
 
-    // const SCB_SCR_SLEEPDEEP: u32 = 0x1 << 2;
-    // unsafe {
-    //     cp.SCB.scr.modify(|scr| scr | SCB_SCR_SLEEPDEEP);
-    // }
-
     let standby_flag = dp.PWR.csr.read().sbf().bit();
 
     if standby_flag {
+        // Clear standby flag
         dp.PWR.cr.modify(|_, w| {
             w.csbf().clear_bit()
         });
-        // Clear Wakeup flag.
+        // Clear Wakeup flag
         dp.PWR.cr.modify(|_, w| w.cwuf().set_bit());
     }
 
